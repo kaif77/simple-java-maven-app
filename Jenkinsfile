@@ -1,3 +1,4 @@
+CODE_CHANGES= getGitChanges()
 pipeline {
     agent {
         docker {
@@ -6,7 +7,12 @@ pipeline {
         }
     }
     stages {
-        stage('Build') { 
+        stage('Build') {
+            when {
+                expression {
+                    BRANCH_NAME == 'dev' && CODE_CHANGES == 'true'
+                }
+            } 
             steps {
                 sh 'mvn -B -DskipTests clean package' 
             }
