@@ -1,5 +1,3 @@
-/* groovylint-disable-next-line CompileStatic */
-CODE_CHANGES = gitChanges()
 pipeline {
     agent {
         docker {
@@ -9,11 +7,6 @@ pipeline {
     }
     stages {
         stage('Build') {
-            when {
-                expression {
-                    BRANCH_NAME == 'dev' && CODE_CHANGES == 'true'
-                }
-            }
             steps {
                 sh 'mvn -B -DskipTests clean package'
             }
